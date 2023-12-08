@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- <mapper namespace="companyInfoDAO"> -->
+<mapper namespace="egovframework.company_info.service.impl.CompanyInfoMapper">
+	
+
+	<resultMap id="companyInfo" type="egovframework.company_info.service.CompanyInfoVO">
+		<result property="comNumber" column="COM_NUMBER" />
+		<result property="num" column="NUM" />
+		<result property="comName" column="COM_NAME" />
+		<result property="comCi" column="COM_CI" />
+		<result property="comEmail" column="COM_EMAIL" />
+		<result property="ceoName" column="CEO_NAME" />
+		<result property="zipCode" column="ZIP_CODE" />
+		<result property="address1" column="ADDRESS1" />
+		<result property="address2" column="ADDRESS2" />
+		<result property="note" column="NOTE" />
+		<result property="ceoPhone" column="CEO_PHONE" />
+	</resultMap>
+	
+	<insert id="insertCompanyInfo">
+		<![CDATA[
+			INSERT INTO COMPANY_INFO 
+				( COM_NUMBER
+				  , NUM
+				  , COM_NAME
+				  , COM_CI
+				  , COM_EMAIL
+				  , CEO_NAME
+				  , ZIP_CODE
+				  , ADDRESS1
+				  , ADDRESS2
+				  , NOTE
+				  , CEO_PHONE )
+			VALUES ( #{comNumber}
+				  , #{num}
+				  , #{comName}
+				  , #{comCi}
+				  , #{comEmail}
+				  , #{ceoName}
+				  , #{zipCode}
+				  , #{address1}
+				  , #{address2}
+				  , #{note}
+				  , #{ceoPhone} )
+		]]>
+	</insert>
+	
+	<update id="updateCompanyInfo">
+		<![CDATA[
+			UPDATE COMPANY_INFO
+			SET COM_NUMBER=#{comNumber}
+				, NUM=#{num}
+				, COM_NAME=#{comName}
+				, COM_CI=#{comCi}
+				, COM_EMAIL=#{comEmail}
+				, CEO_NAME=#{ceoName}
+				, ZIP_CODE=#{zipCode}
+				, ADDRESS1=#{address1}
+				, ADDRESS2=#{address2}
+				, NOTE=#{note}
+				, CEO_PHONE=#{ceoPhone}
+						WHERE COM_NUMBER=#{comNumber}
+				]]>
+	</update>
+	
+	<delete id="deleteCompanyInfo">
+		<![CDATA[
+			DELETE FROM COMPANY_INFO 
+						WHERE COM_NUMBER=#{comNumber}
+				]]>
+	</delete>
+	
+	<select id="selectCompanyInfo" resultMap="companyInfo">
+		<![CDATA[
+			SELECT
+				COM_NUMBER
+				, NUM
+				, COM_NAME
+				, COM_CI
+				, COM_EMAIL
+				, CEO_NAME
+				, ZIP_CODE
+				, ADDRESS1
+				, ADDRESS2
+				, NOTE
+				, CEO_PHONE
+			FROM COMPANY_INFO
+						WHERE COM_NUMBER=#{comNumber}
+				]]>
+	</select>
+	
+	<select id="selectCompanyInfoList" parameterType="egovframework.company_info.service.CompanyInfoVO" resultType="egovMap">
+SELECT * FROM (
+	SELECT A.*, ROWNUM RNUM FROM (
+				SELECT
+								COM_NUMBER
+								, NUM
+								, COM_NAME
+								, COM_CI
+								, COM_EMAIL
+								, CEO_NAME
+								, ZIP_CODE
+								, ADDRESS1
+								, ADDRESS2
+								, NOTE
+								, CEO_PHONE
+						FROM COMPANY_INFO
+				WHERE 1=1
+				<if test="searchKeyword != null and searchKeyword != ''">
+					<if test="searchCondition == 0">AND
+						COM_NUMBER = #{searchKeyword}
+					</if>
+					<if test="searchCondition == 1">AND
+						NUM LIKE '%' || #{searchKeyword} || '%'
+					</if>
+				</if>
+					ORDER BY 
+						COM_NUMBER DESC
+		
+		<![CDATA[					
+	) A WHERE ROWNUM <= #{lastIndex}
+)WHERE RNUM > #{firstIndex}
+]]>
+	</select>	
+	<select id="selectCompanyInfoListTotCnt" parameterType="egovframework.company_info.service.CompanyInfoVO" resultType="int">
+			SELECT COUNT(*) totcnt
+			FROM COMPANY_INFO
+			WHERE 1=1
+			<if test="searchKeyword != null and searchKeyword != ''">
+				<if test="searchCondition == 0">AND
+					COM_NUMBER = #{searchKeyword}
+				</if>
+				<if test="searchCondition == 1">AND
+					NUM LIKE '%' || #{searchKeyword} || '%'
+				</if>
+			</if>
+	</select>
+
+</mapper>

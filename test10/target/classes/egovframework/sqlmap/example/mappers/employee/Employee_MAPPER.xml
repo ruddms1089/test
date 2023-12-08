@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- <mapper namespace="employeeDAO"> -->
+<mapper namespace="egovframework.employee.service.impl.EmployeeMapper">
+	
+
+	<resultMap id="employee" type="egovframework.employee.service.EmployeeVO">
+		<result property="empNumber" column="EMP_NUMBER" />
+		<result property="comNumber" column="COM_NUMBER" />
+		<result property="depNumber" column="DEP_NUMBER" />
+		<result property="pmsNumber" column="PMS_NUMBER" />
+		<result property="password" column="PASSWORD" />
+		<result property="name" column="NAME" />
+		<result property="rankCode" column="RANK_CODE" />
+		<result property="phone" column="PHONE" />
+		<result property="photo" column="PHOTO" />
+		<result property="token" column="TOKEN" />
+		<result property="email" column="EMAIL" />
+		<result property="usePass" column="USE_PASS" />
+		<result property="id" column="ID" />
+	</resultMap>
+	
+	<insert id="insertEmployee">
+		<![CDATA[
+			INSERT INTO EMPLOYEE 
+				( EMP_NUMBER
+				  , COM_NUMBER
+				  , DEP_NUMBER
+				  , PMS_NUMBER
+				  , PASSWORD
+				  , NAME
+				  , RANK_CODE
+				  , PHONE
+				  , PHOTO
+				  , TOKEN
+				  , EMAIL
+				  , USE_PASS
+				  , ID )
+			VALUES ( #{empNumber}
+				  , #{comNumber}
+				  , #{depNumber}
+				  , #{pmsNumber}
+				  , #{password}
+				  , #{name}
+				  , #{rankCode}
+				  , #{phone}
+				  , #{photo}
+				  , #{token}
+				  , #{email}
+				  , #{usePass}
+				  , #{id} )
+		]]>
+	</insert>
+	
+	<update id="updateEmployee">
+		<![CDATA[
+			UPDATE EMPLOYEE
+			SET EMP_NUMBER=#{empNumber}
+				, COM_NUMBER=#{comNumber}
+				, DEP_NUMBER=#{depNumber}
+				, PMS_NUMBER=#{pmsNumber}
+				, PASSWORD=#{password}
+				, NAME=#{name}
+				, RANK_CODE=#{rankCode}
+				, PHONE=#{phone}
+				, PHOTO=#{photo}
+				, TOKEN=#{token}
+				, EMAIL=#{email}
+				, USE_PASS=#{usePass}
+				, ID=#{id}
+						WHERE EMP_NUMBER=#{empNumber}
+				]]>
+	</update>
+	
+	<delete id="deleteEmployee">
+		<![CDATA[
+			DELETE FROM EMPLOYEE 
+						WHERE EMP_NUMBER=#{empNumber}
+				]]>
+	</delete>
+	
+	<select id="selectEmployee" resultMap="employee">
+		<![CDATA[
+			SELECT
+				EMP_NUMBER
+				, COM_NUMBER
+				, DEP_NUMBER
+				, PMS_NUMBER
+				, PASSWORD
+				, NAME
+				, RANK_CODE
+				, PHONE
+				, PHOTO
+				, TOKEN
+				, EMAIL
+				, USE_PASS
+				, ID
+			FROM EMPLOYEE
+						WHERE EMP_NUMBER=#{empNumber}
+				]]>
+	</select>
+	
+	<select id="selectEmployeeList" parameterType="egovframework.employee.service.EmployeeVO" resultType="egovMap">
+SELECT * FROM (
+	SELECT A.*, ROWNUM RNUM FROM (
+				SELECT
+								EMP_NUMBER
+								, COM_NUMBER
+								, DEP_NUMBER
+								, PMS_NUMBER
+								, PASSWORD
+								, NAME
+								, RANK_CODE
+								, PHONE
+								, PHOTO
+								, TOKEN
+								, EMAIL
+								, USE_PASS
+								, ID
+						FROM EMPLOYEE
+				WHERE 1=1
+				<if test="searchKeyword != null and searchKeyword != ''">
+					<if test="searchCondition == 0">AND
+						EMP_NUMBER = #{searchKeyword}
+					</if>
+					<if test="searchCondition == 1">AND
+						COM_NUMBER LIKE '%' || #{searchKeyword} || '%'
+					</if>
+				</if>
+					ORDER BY 
+						EMP_NUMBER DESC
+		
+		<![CDATA[					
+	) A WHERE ROWNUM <= #{lastIndex}
+)WHERE RNUM > #{firstIndex}
+]]>
+	</select>	
+	<select id="selectEmployeeListTotCnt" parameterType="egovframework.employee.service.EmployeeVO" resultType="int">
+			SELECT COUNT(*) totcnt
+			FROM EMPLOYEE
+			WHERE 1=1
+			<if test="searchKeyword != null and searchKeyword != ''">
+				<if test="searchCondition == 0">AND
+					EMP_NUMBER = #{searchKeyword}
+				</if>
+				<if test="searchCondition == 1">AND
+					COM_NUMBER LIKE '%' || #{searchKeyword} || '%'
+				</if>
+			</if>
+	</select>
+
+</mapper>

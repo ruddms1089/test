@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- <mapper namespace="departmentInfoDAO"> -->
+<mapper namespace="egovframework.department_info.service.impl.DepartmentInfoMapper">
+	
+
+	<resultMap id="departmentInfo" type="egovframework.department_info.service.DepartmentInfoVO">
+		<result property="depNumber" column="DEP_NUMBER" />
+		<result property="comNumber" column="COM_NUMBER" />
+		<result property="depName" column="DEP_NAME" />
+	</resultMap>
+	
+	<insert id="insertDepartmentInfo">
+		<![CDATA[
+			INSERT INTO DEPARTMENT_INFO 
+				( DEP_NUMBER
+				  , COM_NUMBER
+				  , DEP_NAME )
+			VALUES ( #{depNumber}
+				  , #{comNumber}
+				  , #{depName} )
+		]]>
+	</insert>
+	
+	<update id="updateDepartmentInfo">
+		<![CDATA[
+			UPDATE DEPARTMENT_INFO
+			SET DEP_NUMBER=#{depNumber}
+				, COM_NUMBER=#{comNumber}
+				, DEP_NAME=#{depName}
+						WHERE DEP_NUMBER=#{depNumber}
+				]]>
+	</update>
+	
+	<delete id="deleteDepartmentInfo">
+		<![CDATA[
+			DELETE FROM DEPARTMENT_INFO 
+						WHERE DEP_NUMBER=#{depNumber}
+				]]>
+	</delete>
+	
+	<select id="selectDepartmentInfo" resultMap="departmentInfo">
+		<![CDATA[
+			SELECT
+				DEP_NUMBER
+				, COM_NUMBER
+				, DEP_NAME
+			FROM DEPARTMENT_INFO
+						WHERE DEP_NUMBER=#{depNumber}
+				]]>
+	</select>
+	
+	<select id="selectDepartmentInfoList" parameterType="egovframework.department_info.service.DepartmentInfoVO" resultType="egovMap">
+SELECT * FROM (
+	SELECT A.*, ROWNUM RNUM FROM (
+				SELECT
+								DEP_NUMBER
+								, COM_NUMBER
+								, DEP_NAME
+						FROM DEPARTMENT_INFO
+				WHERE 1=1
+				<if test="searchKeyword != null and searchKeyword != ''">
+					<if test="searchCondition == 0">AND
+						DEP_NUMBER = #{searchKeyword}
+					</if>
+					<if test="searchCondition == 1">AND
+						COM_NUMBER LIKE '%' || #{searchKeyword} || '%'
+					</if>
+				</if>
+					ORDER BY 
+						DEP_NUMBER DESC
+		
+		<![CDATA[					
+	) A WHERE ROWNUM <= #{lastIndex}
+)WHERE RNUM > #{firstIndex}
+]]>
+	</select>	
+	<select id="selectDepartmentInfoListTotCnt" parameterType="egovframework.department_info.service.DepartmentInfoVO" resultType="int">
+			SELECT COUNT(*) totcnt
+			FROM DEPARTMENT_INFO
+			WHERE 1=1
+			<if test="searchKeyword != null and searchKeyword != ''">
+				<if test="searchCondition == 0">AND
+					DEP_NUMBER = #{searchKeyword}
+				</if>
+				<if test="searchCondition == 1">AND
+					COM_NUMBER LIKE '%' || #{searchKeyword} || '%'
+				</if>
+			</if>
+	</select>
+
+</mapper>
