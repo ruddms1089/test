@@ -71,7 +71,7 @@
 				]]>
 	</select>
 	
-	<select id="selectNoticList" parameterType="egovframework.notic.service.NoticVO" resultType="egovMap">
+<select id="selectNoticList" parameterType="egovframework.notic.service.NoticVO" resultType="egovMap">
 SELECT * FROM (
 	SELECT A.*, ROWNUM RNUM FROM (
 				SELECT
@@ -100,6 +100,7 @@ SELECT * FROM (
 )WHERE RNUM > #{firstIndex}
 ]]>
 	</select>	
+
 	<select id="selectNoticListTotCnt" parameterType="egovframework.notic.service.NoticVO" resultType="int">
 			SELECT COUNT(*) totcnt
 			FROM NOTIC

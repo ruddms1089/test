@@ -75,13 +75,12 @@ public class NoticDAO extends EgovAbstractMapper {
     }
 
     /**
-	 * NOTIC 총 갯수를 조회한다.
-	 * @param searchMap - 조회할 정보가 담긴 Map
-	 * @return NOTIC 총 갯수
+     * Department 이름을 조회한다.
+	 * @param searchVO - 조회할 정보가 담긴 VO
+	 * @return 부서 이름
 	 * @exception
 	 */
     public int selectNoticListTotCnt(NoticDefaultVO searchVO) {
         return (Integer)selectOne("noticDAO.selectNoticListTotCnt", searchVO);
     }
-
 }

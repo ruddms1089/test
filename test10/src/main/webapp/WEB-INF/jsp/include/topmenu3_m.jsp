@@ -1,22 +1,24 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://getbootstrap.com/docs/5.3/assets/css/docs.css"
-      rel="stylesheet"
-    />
-    <title>부서장</title>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-  </head>
-  <body class="p-3 m-0 border-0 bd-example m-0 border-0">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>부서장</title>
+<!-- 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+  --> 
+</head>
+
+<style>
+.navbar-brand img {
+	width: 100px; /* 원하는 너비로 조절 */
+	height: 68px; /* 원하는 높이로 조절 */
+}
+</style>
+
+<body class="p-3 m-0 border-0 bd-example m-0 border-0">
     <!-- Example Code -->
 
     <ul class="nav nav-tabs">

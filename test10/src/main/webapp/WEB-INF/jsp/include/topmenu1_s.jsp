@@ -24,7 +24,7 @@
 		<ul class="nav nav-tabs">
 			<li class="nav-item">
 				<a class="navbar-brand" href="#"> 
-					<img src="../img/atozsystem_Logo.png" alt="atoz_Logo" width="30" height="24">
+					<img src="img/atozsystem_Logo.png" alt="atoz_Logo" width="30" height="24">
 				</a>
 			</li>
 			<li class="nav-item dropdown">

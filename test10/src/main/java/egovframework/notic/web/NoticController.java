@@ -72,6 +72,9 @@ public class NoticController {
         List<?> noticList = noticService.selectNoticList(searchVO);
         model.addAttribute("resultList", noticList);
         
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("noticList");
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
         int totCnt = noticService.selectNoticListTotCnt(searchVO);
 		paginationInfo.setTotalRecordCount(totCnt);
         model.addAttribute("paginationInfo", paginationInfo);
@@ -137,10 +140,10 @@ public class NoticController {
         return "forward:/notic/NoticList.do";
     }
     
-    @RequestMapping("/notic/noticWrite.do")
+    @RequestMapping("/notic/NoticList2.do")
 	public String NoticWrite() {
-		
-		return "notic/NewFile";
+		// 기업관리자 List화면
+		return "notic/NoticList2";
 	}
 
 }

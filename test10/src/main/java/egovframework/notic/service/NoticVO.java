@@ -91,5 +91,5 @@ public class NoticVO extends NoticDefaultVO{
     public void setDates(java.sql.Date dates) {
         this.dates = dates;
     }
-    
+ 
 }
